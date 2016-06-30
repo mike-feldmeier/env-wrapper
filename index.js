@@ -12,5 +12,9 @@ module.exports = {
 
 	get: function(key) {
 		return process.env[key];
+	},
+
+	set: function(key, value) {
+		process.env[key] = value;
 	}
 };
