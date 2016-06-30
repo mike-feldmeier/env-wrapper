@@ -1,0 +1,17 @@
+{
+  "name": "env-wrapper",
+  "version": "1.0.0",
+  "description": "Wrapper for setting default and enforcing required environment variables",
+  "main": "index.js",
+  "keywords": [
+    "env",
+    "environment",
+    "wrapper"
+  ],
+  "author": "Mike Feldmeier (mike.feldmeier@gmail.com) <mikefeldmeier.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "latest",
+		"mocha": "latest"
+  }
+}
