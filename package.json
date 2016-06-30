@@ -4,7 +4,7 @@
   "homepage": "https://github.com/mike-feldmeier/env-wrapper",
   "bugs": "https://github.com/mike-feldmeier/env-wrapper/issues",
   "author": "Mike Feldmeier <mike.feldmeier@gmail.com> (http://www.mikefeldmeier.com)",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "keywords": [
     "env",
