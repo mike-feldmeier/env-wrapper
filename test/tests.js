@@ -32,7 +32,7 @@ describe('env-wrapper', function() {
 
 	describe('#require', function() {
 		it('should fail on an unknown variable with no default ', function() {
-			assert.throws(function() { env.require('TEST_VARIABLE_NOT_PRESENT'); }, Error);
+			assert.throws(function() { env.require('TEST_VARIABLE_NOT_PRESENT'); }, 'The environment variable "TEST_VARIABLE_NOT_PRESENT" is not defined, and no default value is available');
 		});
 
 		it('should not fail on an unknown variable with a default ', function() {
