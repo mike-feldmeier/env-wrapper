@@ -9,6 +9,8 @@ module.exports = {
 				process.env[key] = defaultValue;
 			}
 		}
+		
+		return process.env[key];
 	},
 
 	get: function(key) {
