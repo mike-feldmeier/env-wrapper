@@ -4,7 +4,7 @@
   "homepage": "https://github.com/mike-feldmeier/env-wrapper",
   "bugs": "https://github.com/mike-feldmeier/env-wrapper/issues",
   "author": "Mike Feldmeier <mike.feldmeier@gmail.com> (http://www.mikefeldmeier.com)",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "keywords": [
     "env",
@@ -12,12 +12,13 @@
     "wrapper"
   ],
   "repository": {
-	"type": "git",
-	"url": "https://github.com/mike-feldmeier/env-wrapper.git"
+    "type": "git",
+    "url": "https://github.com/mike-feldmeier/env-wrapper.git"
+  },
+  "scripts": {
+    "test": "npx jasmine"
   },
   "devDependencies": {
-  	"chai": "latest",
-	"mocha": "latest"
   },
   "main": "index.js"
 }
