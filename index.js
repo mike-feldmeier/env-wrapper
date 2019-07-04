@@ -1,56 +1,42 @@
 const fs = require('fs')
-const readline = require('readline')
+const path = require('path')
 
 module.exports = {
-	load: (fname = '.env') => {
-		return new Promise((resolve, reject) => {
-			fs.access(fname, fs.constants.R_OK, err => {
-				if(err) {
-					resolve()
-				}
-				else {
-					try {
-						readline.createInterface({
-							input: fs.createReadStream(fname), 
-							console: false, 
-							crlfDelay: Infinity
-						})
-						.on('line', line => {
-							if(line.includes('=')) {
-								const [ key, value ] = line.split('=')
-								process.env[key.trim()] = value.trim()
-							}
-						})
-						.on('close', () => {
-							resolve()
-						})
-					}
-					catch(err) {
-						reject(err)
-					}
-				}
-			})
-		})
-	},
+  load: (fname = '.env') => {
+    try {
+      const effectiveFilename = path.join(process.cwd(), fname)
+      const data = fs.readFileSync(effectiveFilename, 'utf8')
 
-	require: (key, defaultValue) => {
-		if(process.env[key] === undefined) {
-			if(defaultValue === undefined) {
-				throw new Error(`The environment variable "${key}" is not defined, and no default value is available`)
-			}
-			else {
-				process.env[key] = defaultValue
-			}
-		}
-		
-		return process.env[key]
-	},
+      data.split('\n').forEach(line => {
+        if (line.includes('=')) {
+          const [key, value] = line.split('=')
+          process.env[key.trim()] = value.trim()
+        }
+      })
+    } catch (err) {
+      if (err.code !== 'ENOENT') {
+        throw err
+      }
+    }
+  },
 
-	get: key => {
-		return process.env[key]
-	},
+  require: (key, defaultValue) => {
+    if (process.env[key] === undefined) {
+      if (defaultValue === undefined) {
+        throw new Error(`The environment variable "${key}" is not defined, and no default value is available`)
+      } else {
+        process.env[key] = defaultValue
+      }
+    }
 
-	set: (key, value) => {
-		process.env[key] = value
-	}
-};
+    return process.env[key]
+  },
+
+  get: key => {
+    return process.env[key]
+  },
+
+  set: (key, value) => {
+    process.env[key] = value
+  }
+}
