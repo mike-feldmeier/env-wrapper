@@ -58,6 +58,7 @@ From Node.js:
 
 Version | Changes
 --- | ---
+1.0.6 | Fix to handle .env file values with embedded '=' symbols
 1.0.5 | Changed load to sync operation; Fix to path calculations
 1.0.4 | Added load method; moved tests to Jasmine
 1.0.3 | Require method returns value

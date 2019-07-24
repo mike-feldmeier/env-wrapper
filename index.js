@@ -9,8 +9,8 @@ module.exports = {
 
       data.split('\n').forEach(line => {
         if (line.includes('=')) {
-          const [key, value] = line.split('=')
-          process.env[key.trim()] = value.trim()
+          const [key, ...values] = line.split('=')
+          process.env[key.trim()] = values.join('=').trim()
         }
       })
     } catch (err) {

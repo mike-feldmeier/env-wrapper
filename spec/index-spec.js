@@ -20,6 +20,10 @@ describe('env-wrapper', function () {
     it('should not throw an error if the file does not exist', function () {
       env.load('doesnt-exist.env')
     })
+    it('should parse entries with embedded identifiers', function () {
+      env.load('./spec/test.env')
+      expect(process.env.TEST_PROPERTY_EMBEDDED).toEqual('this=has=embedded=identifiers')
+    })
   })
 
   describe('#require', function () {
