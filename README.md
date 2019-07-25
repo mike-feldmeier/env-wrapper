@@ -1,60 +1,67 @@
 # env-wrapper
-A simple js wrapper around environmental variables, to allow upfront checking and defaulting of required variables
 
-## Example
+A simple js wrapper around environmental variables, to allow upfront loading, checking, and defaulting of required variables
 
-    const env = require('env-wrapper');
+- [Installation](#installation)
+- [Load environment from a file](#load-environment-from-a-file)
+- [Read and enforce that a required environment property is present](#read-and-enforce-that-a-required-environment-property-is-present)
+- [Read and default an optional environment property](#read-and-default-an-optional-environment-property)
+- [Simple getter / setter](#simple-getter--setter)
+- [Release History](#release-history)
+- [License](#license)
 
-    env.load();                                          // Load .env file if available
-    const port = env.require('PORT', 3000);              // Retrieve port from environment, 
-                                                         // default to 3000 if not there
-    const databaseUrl = env.require('DATABASE_URL');     // Retrieve database from environment, 
-                                                         // throw error if not there
+## Installation
 
-## Example .env file
+From the terminal, install the package from npm:
+
+    npm i env-wrapper
+
+From within your code, import the library:
+
+```javascript
+const env = require('env-wrapper')
+```
+
+## Load environment from a file
+
+Optionally read key-value pairs from a file and insert them into the environment.  If a filename is not given, '.env' in the base directory is used.  If either the assumed or named file does not exist, no error is issued.  An error will be issued if the file exists but and error in encountered.  Note that this is a convenience method, and env-wrapper will readily handle any environment variables inserted through other means.
+
+```javascript
+env.load()
+env.load('development.env')
+```
+
+*Example .env file:*
 
     PORT=1234
     DATABASE_URL=db://localhost
 
-## API
+## Read and enforce that a required environment property is present
 
-### #load(filename = '.env')
-From Node.js:
+The original intent of this library was to simply ensure fail-fast behavior if a required environment variable had not been specified, so that we know when the application loads instead of 3am next Tuesday when actually uses it.
 
-    const env = require('env-wrapper');
-    env.load();                                          // Loads .env into the environment 
-                                                         // from the current directory if available
-    env.load('/my-files/my.env')                         // Loads the specified file into the environment 
+```javascript
+const databaseUrl = env.require('DATABASE_URL')
+```
 
-### #require(key, defaultValue?)
-From Node.js:
+## Read and default an optional environment property
 
-    const env = require('env-wrapper');
-    env.require('MY_ENV_VAR_THAT_EXISTS');               // Nothing happens
+If the requested environment property cannot be found, and a default value is specified, that value will be inserted into the environment, and then returned as the requested value.  Because the environment can be altered by this form, this can also be used as a shortcut for conditionally priming the environment for later use.
 
-    env.require('MY_ENV_VAR_THAT_DOESNT_EXIST', 'xyz');  // process.env.MY_ENV_VAR_THAT_DOESNT_EXISTS
-                                                         // now equals 'xyz'
+```javascript
+const port = env.require('PORT', 3000)
+```
 
-    env.require('MY_ENV_VAR_THAT_DOESNT_EXIST');         // An Error is thrown
+## Simple getter / setter
 
-### #get(key)
-From Node.js:
+The library also provides a simple getter and setter that can be used for unconditionally inserting a value into the environment, or retrieving a value from the environment.  Unlike *require* above, *get* will either return the found value, or undefined if a value is not found.
 
-    const env = require('env-wrapper');
-    env.get('MY_ENV_VAR_THAT_EXISTS');                   // Returns the value that has been defined, either
-                                                         // from the environment, or through the default require
-                                                         // shown above
+```javascript
+env.set('my-key', 'abc')
+const key = env.get('my-key')
+```
 
-    env.get('MY_ENV_VAR_THAT_DOESNT_EXIST');             // Returns undefined
-
-## #set(key, value)
-From Node.js:
-
-    const env = require('env-wrapper');
-    env.set('MY_ENV_VAR_THAT_EXISTS', 'xyz');            // Sets the given value as an environmental variable 
-
-
-## Changes
+## Release History
 
 Version | Changes
 --- | ---
@@ -65,3 +72,7 @@ Version | Changes
 1.0.2 | Fix for error message unit test
 1.0.1 | Added set method; fixed package.json NPM error
 1.0.0 | Initial Release
+
+## License
+
+This work is released under the MIT license - see the [LICENSE](https://github.com/mike-feldmeier/env-wrapper/blob/master/LICENSE) file for details
