@@ -7,6 +7,7 @@ A simple js wrapper around environmental variables, to allow upfront loading, ch
 - [Read and enforce that a required environment property is present](#read-and-enforce-that-a-required-environment-property-is-present)
 - [Read and default an optional environment property](#read-and-default-an-optional-environment-property)
 - [Simple getter / setter](#simple-getter--setter)
+- [Testing](#testing)
 - [Release History](#release-history)
 - [License](#license)
 
@@ -61,10 +62,17 @@ env.set('my-key', 'abc')
 const key = env.get('my-key')
 ```
 
+## Testing
+
+There are several Jasmine-based unit tests that can be run from the terminal if desired:
+
+    npm test
+
 ## Release History
 
 Version | Changes
 --- | ---
+1.0.7 | Documentation revamp
 1.0.6 | Fix to handle .env file values with embedded '=' symbols
 1.0.5 | Changed load to sync operation; Fix to path calculations
 1.0.4 | Added load method; moved tests to Jasmine
