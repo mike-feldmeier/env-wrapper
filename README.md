@@ -20,7 +20,7 @@ From the terminal, install the package from npm:
 From within your code, import the library:
 
 ```javascript
-const env = require('env-wrapper')
+import env from 'env-wrapper'
 ```
 
 ## Load environment from a file
@@ -28,8 +28,8 @@ const env = require('env-wrapper')
 Optionally read key-value pairs from a file and insert them into the environment.  If a filename is not given, '.env' in the base directory is used.  If either the assumed or named file does not exist, no error is issued.  An error will be issued if the file exists but and error in encountered.  Note that this is a convenience method, and env-wrapper will readily handle any environment variables inserted through other means.
 
 ```javascript
-env.load()
-env.load('development.env')
+await env.load()
+await env.load('development.env')
 ```
 
 *Example .env file:*
@@ -72,6 +72,7 @@ There are several Jasmine-based unit tests that can be run from the terminal if 
 
 Version | Changes
 --- | ---
+2.0.0 | Updated to be more ES6 friendly; load is now async
 1.0.7 | Documentation revamp
 1.0.6 | Fix to handle .env file values with embedded '=' symbols
 1.0.5 | Changed load to sync operation; Fix to path calculations

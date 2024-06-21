@@ -1,56 +1,56 @@
-var env = require('../index.js')
+import env from '../index.js'
 
-describe('env-wrapper', function () {
+describe('env-wrapper', () => {
 
-  beforeEach(function () {
+  beforeEach(() => {
     expect(process.env.TEST_VARIABLE_PRESENT).toBe(undefined)
     expect(process.env.TEST_VARIABLE_NOT_PRESENT).toBe(undefined)
   })
 
-  afterEach(function () {
+  afterEach(() => {
     delete process.env.TEST_VARIABLE_PRESENT
     delete process.env.TEST_VARIABLE_NOT_PRESENT
   })
 
-  describe('#load', function () {
-    it('should load properties from a file', function () {
-      env.load('./spec/test.env')
+  describe('#load', () => {
+    it('should load properties from a file', async () => {
+      await env.load('./spec/test.env')
       expect(process.env.TEST_PROPERTY_ONE).toEqual('1')
     })
-    it('should not throw an error if the file does not exist', function () {
-      env.load('doesnt-exist.env')
+    it('should not throw an error if the file does not exist', async () => {
+      await env.load('doesnt-exist.env')
     })
-    it('should parse entries with embedded identifiers', function () {
-      env.load('./spec/test.env')
+    it('should parse entries with embedded identifiers', async () => {
+      await env.load('./spec/test.env')
       expect(process.env.TEST_PROPERTY_EMBEDDED).toEqual('this=has=embedded=identifiers')
     })
   })
 
-  describe('#require', function () {
-    it('should retrieve a known variable', function () {
+  describe('#require', () => {
+    it('should retrieve a known variable', () => {
       process.env.TEST_VARIABLE_PRESENT = 'xyz'
       expect(env.require('TEST_VARIABLE_PRESENT')).toEqual('xyz')
     })
-    it('should retrieve a defaulted variable', function () {
+    it('should retrieve a defaulted variable', () => {
       expect(env.require('TEST_VARIABLE_NOT_PRESENT', 'xyz')).toEqual('xyz')
     })
-    it('should fail on an unknown variable with no default ', function () {
+    it('should fail on an unknown variable with no default ', () => {
       expect(() => { env.require('TEST_VARIABLE_NOT_PRESENT') }).toThrow()
     })
   })
 
-  describe('#get', function () {
-    it('should get a known variable', function () {
+  describe('#get', () => {
+    it('should get a known variable', () => {
       process.env.TEST_VARIABLE_PRESENT = 'xyz'
       expect(env.get('TEST_VARIABLE_PRESENT')).toEqual('xyz')
     })
 
-    it('should get a defaulted variable', function () {
+    it('should get a defaulted variable', () => {
       env.require('TEST_VARIABLE_PRESENT', 'default-xyz')
       expect(env.get('TEST_VARIABLE_PRESENT')).toEqual('default-xyz')
     })
 
-    it('should get an unknown variable', function () {
+    it('should get an unknown variable', () => {
       expect(env.get('TEST_VARIABLE_PRESENT')).toBe(undefined)
     })
   })
