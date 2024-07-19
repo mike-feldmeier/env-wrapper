@@ -11,8 +11,13 @@ const load = async (fname = '.env', options = {}) => {
 
   options = Object.assign({}, DEFAULT_OPTIONS, options)
 
+  const effectiveFilename = join(process.cwd(), fname)
+
   try {
-    const effectiveFilename = join(process.cwd(), fname)
+    if(options.debug) {
+      console.log(`env-wrapper: loading env file...`)
+    }
+
     const data = await readFile(effectiveFilename, 'utf8')
 
     data.split('\n').forEach(line => {
@@ -30,7 +35,12 @@ const load = async (fname = '.env', options = {}) => {
     })
   }
   catch (err) {
-    if (err.code !== 'ENOENT') {
+    if(err.code === 'ENOENT') {
+      if(options.debug) {
+        console.log(`env-wrapper: no environment file found ("${effectiveFilename}")`)
+      }
+    }
+    else {
       throw err
     }
   }

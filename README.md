@@ -88,6 +88,7 @@ There are several Jasmine-based unit tests that can be run from the terminal if 
 
 Version | Changes
 --- | ---
+2.1.1 | Expanded debug information
 2.1.0 | Added debug option for load function
 2.0.0 | Updated to be more ES6 friendly; load is now async
 1.0.7 | Documentation revamp
