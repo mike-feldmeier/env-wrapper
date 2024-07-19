@@ -24,6 +24,10 @@ describe('env-wrapper', () => {
       await env.load('./spec/test.env')
       expect(process.env.TEST_PROPERTY_EMBEDDED).toEqual('this=has=embedded=identifiers')
     })
+    it('should strip optional private key indicator', async () => {
+      await env.load('./spec/test.env')
+      expect(process.env.TEST_PROPERTY_PRIVATE).toEqual('secret')
+    })
   })
 
   describe('#require', () => {

@@ -62,6 +62,22 @@ env.set('my-key', 'abc')
 const key = env.get('my-key')
 ```
 
+## Optional debug of load behavior
+
+Adding an object that sets debug to true will print any variables that are loaded to the console.
+
+```javascript
+await env.load({ debug: true })
+await env.load('development.env', { debug: true })
+```
+
+Any key names that end with a `*` will have their value replaced with `(secret)` in the console.
+
+*Example .env file:*
+
+    USERNAME=public
+    PASSWORD*=private
+
 ## Testing
 
 There are several Jasmine-based unit tests that can be run from the terminal if desired:
@@ -72,6 +88,7 @@ There are several Jasmine-based unit tests that can be run from the terminal if 
 
 Version | Changes
 --- | ---
+2.1.0 | Added debug option for load function
 2.0.0 | Updated to be more ES6 friendly; load is now async
 1.0.7 | Documentation revamp
 1.0.6 | Fix to handle .env file values with embedded '=' symbols
