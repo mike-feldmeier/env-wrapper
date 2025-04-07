@@ -1,5 +1,5 @@
 import { readFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { resolve } from 'node:path'
 
 const DEFAULT_OPTIONS = { debug: false }
 
@@ -13,7 +13,7 @@ const load = async (fname = '.env', options = {}) => {
 
   options = Object.assign({}, DEFAULT_OPTIONS, options)
 
-  const effectiveFilename = join(process.cwd(), fname)
+  const effectiveFilename = resolve(process.cwd(), fname)
 
   try {
     if(options.debug) {

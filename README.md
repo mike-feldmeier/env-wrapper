@@ -25,11 +25,12 @@ import env from 'env-wrapper'
 
 ## Load environment from a file
 
-Optionally read key-value pairs from a file and insert them into the environment.  If a filename is not given, '.env' in the base directory is used.  If either the assumed or named file does not exist, no error is issued.  An error will be issued if the file exists but and error in encountered.  Note that this is a convenience method, and env-wrapper will readily handle any environment variables inserted through other means.
+Optionally read key-value pairs from a file and insert them into the environment.  If a filename is not given, '.env' in the base directory is used.  If either the assumed or named file does not exist, no error is issued.  An error will be issued if the file exists but an error is encountered.  Note that this is a convenience method, and env-wrapper will readily handle any environment variables inserted through other means.  In `2.2.1` and previous, the current working directory was prepended to the filename given, so the file would always have to be in the working directory.  As of `2.2.2`, it will resolve between the current working directory and the path given, so that absolute paths and paths relative to current working directory can be used.
 
 ```javascript
 await env.load()
 await env.load('development.env')
+await env.load('/absolute/path/development.env')
 ```
 
 *Example .env file:*
@@ -99,6 +100,7 @@ There are several Jasmine-based unit tests that can be run from the terminal if 
 
 Version | Changes
 --- | ---
+2.2.2 | Fix to loading from outside current working directory
 2.2.1 | Update docs for comments (smh)
 2.2.0 | Added basic support for comments
 2.1.1 | Expanded debug information
