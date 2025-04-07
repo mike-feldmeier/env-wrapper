@@ -3,8 +3,8 @@ import env from '../index.js'
 describe('env-wrapper', () => {
 
   beforeEach(() => {
-    expect(process.env.TEST_VARIABLE_PRESENT).toBe(undefined)
-    expect(process.env.TEST_VARIABLE_NOT_PRESENT).toBe(undefined)
+    expect(process.env.TEST_VARIABLE_PRESENT).toBeUndefined()
+    expect(process.env.TEST_VARIABLE_NOT_PRESENT).toBeUndefined()
   })
 
   afterEach(() => {
@@ -27,6 +27,11 @@ describe('env-wrapper', () => {
     it('should strip optional private key indicator', async () => {
       await env.load('./spec/test.env')
       expect(process.env.TEST_PROPERTY_PRIVATE).toEqual('secret')
+    })
+    it('should ignore comment lines', async () => {
+      await env.load('./spec/test.env')
+      expect(process.env['#TEST_PROPERTY_COMMENT1']).toBeUndefined()
+      expect(process.env['# TEST_PROPERTY_COMMENT2']).toBeUndefined()
     })
   })
 
@@ -55,7 +60,7 @@ describe('env-wrapper', () => {
     })
 
     it('should get an unknown variable', () => {
-      expect(env.get('TEST_VARIABLE_PRESENT')).toBe(undefined)
+      expect(env.get('TEST_VARIABLE_PRESENT')).toBeUndefined()
     })
   })
 

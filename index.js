@@ -3,6 +3,8 @@ import { join } from 'node:path'
 
 const DEFAULT_OPTIONS = { debug: false }
 
+const isComment = (line = '') => line.trim().startsWith('#')
+
 const load = async (fname = '.env', options = {}) => {
   if(typeof fname === 'object') {
     options = fname
@@ -21,7 +23,7 @@ const load = async (fname = '.env', options = {}) => {
     const data = await readFile(effectiveFilename, 'utf8')
 
     data.split('\n').forEach(line => {
-      if (line.includes('=')) {
+      if (line.includes('=') && !isComment(line)) {
         const [key, ...values] = line.split('=')
         const privateKey = key.trim().endsWith('*')
         const setKey = privateKey ? key.trim().slice(0, -1) : key.trim()

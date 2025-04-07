@@ -62,6 +62,17 @@ env.set('my-key', 'abc')
 const key = env.get('my-key')
 ```
 
+## Comments
+
+Any line where the first non-space character is '#' will be ignored.  This allows commenting for clarity, or temporarily removing a line from effect with out actually removing it.
+
+*Example .env file:*
+
+    # Credentials
+    USERNAME=public
+    PASSWORD*=private
+
+
 ## Optional debug of load behavior
 
 Adding an object that sets debug to true will print any variables that are loaded to the console.
@@ -88,6 +99,8 @@ There are several Jasmine-based unit tests that can be run from the terminal if 
 
 Version | Changes
 --- | ---
+2.2.1 | Update docs for comments (smh)
+2.2.0 | Added basic support for comments
 2.1.1 | Expanded debug information
 2.1.0 | Added debug option for load function
 2.0.0 | Updated to be more ES6 friendly; load is now async
